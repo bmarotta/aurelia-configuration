@@ -26,6 +26,7 @@
  */
 System.register([], function (exports_1, context_1) {
     "use strict";
+    var deepExtend;
     var __moduleName = context_1 && context_1.id;
     function isSpecificValue(val) {
         return (val instanceof Buffer
@@ -68,7 +69,6 @@ System.register([], function (exports_1, context_1) {
         });
         return clone;
     }
-    var deepExtend;
     return {
         setters: [],
         execute: function () {/*!

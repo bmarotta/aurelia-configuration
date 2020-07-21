@@ -9,6 +9,11 @@ export declare class AureliaConfiguration {
     private window;
     private _config_object;
     private _config_merge_object;
+    failOnLoadError: boolean;
+    private _loaded;
+    private _loadError;
+    get loaded(): boolean;
+    get loadError(): string;
     constructor();
     setDirectory(path: string): void;
     setConfig(name: string): void;
@@ -17,8 +22,8 @@ export declare class AureliaConfiguration {
     setCascadeMode(bool?: boolean): void;
     setWindow(window: WindowInfo): void;
     setBasePathMode(bool?: boolean): void;
-    readonly obj: any;
-    readonly config: string;
+    get obj(): any;
+    get config(): string;
     is(environment: string): boolean;
     check(): void;
     environmentEnabled(): boolean;
@@ -31,6 +36,6 @@ export declare class AureliaConfiguration {
     setAll(obj: {} | any): void;
     getAll(): any;
     loadConfig(): Promise<void>;
-    loadConfigFile(path: string, action: Function): Promise<{}>;
-    mergeConfigFile(path: string, optional: boolean): Promise<{}>;
+    loadConfigFile(path: string, action: Function): Promise<unknown>;
+    mergeConfigFile(path: string, optional: boolean): Promise<unknown>;
 }

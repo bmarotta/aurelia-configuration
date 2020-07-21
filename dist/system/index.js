@@ -1,5 +1,6 @@
 System.register(["./aurelia-configuration"], function (exports_1, context_1) {
     "use strict";
+    var aurelia_configuration_1;
     var __moduleName = context_1 && context_1.id;
     function configure(aurelia, configCallback) {
         var instance = aurelia.container.get(aurelia_configuration_1.AureliaConfiguration);
@@ -16,7 +17,6 @@ System.register(["./aurelia-configuration"], function (exports_1, context_1) {
         });
     }
     exports_1("configure", configure);
-    var aurelia_configuration_1;
     return {
         setters: [
             function (aurelia_configuration_1_1) {

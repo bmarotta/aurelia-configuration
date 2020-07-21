@@ -1,7 +1,8 @@
 define(["require", "exports", "./aurelia-configuration"], function (require, exports, aurelia_configuration_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.AureliaConfiguration = aurelia_configuration_1.AureliaConfiguration;
+    exports.AureliaConfiguration = exports.configure = void 0;
+    Object.defineProperty(exports, "AureliaConfiguration", { enumerable: true, get: function () { return aurelia_configuration_1.AureliaConfiguration; } });
     function configure(aurelia, configCallback) {
         var instance = aurelia.container.get(aurelia_configuration_1.AureliaConfiguration);
         var promise = null;

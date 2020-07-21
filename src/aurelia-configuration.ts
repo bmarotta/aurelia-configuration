@@ -1,9 +1,9 @@
 import { join } from 'aurelia-path';
-import { PLATFORM } from 'aurelia-pal';
 import deepExtend from './deep-extend';
 import { WindowInfo } from './window-info';
 
-export class Configuration {
+export class AureliaConfiguration {
+
     private environment: string = 'default';
     private environments: string[] | null = null;
     private directory: string = 'config';
@@ -15,15 +15,21 @@ export class Configuration {
     private _config_object: {} | any = {};
     private _config_merge_object: {} | any = {};
 
+    public failOnLoadError: boolean = true;
+    private _loaded: boolean = false;
+    private _loadError: string = '';
+
+    public get loaded (): boolean { return this._loaded; }
+    public get loadError (): string { return this._loadError; }
+
     constructor() {
         // Setup the window object with the current browser window information
         this.window = new WindowInfo();
-        this.window.hostName = PLATFORM.location.hostname;
-        this.window.port = PLATFORM.location.port;
-
+        this.window.hostName = window.location.hostname;
+        this.window.port = window.location.port;
         // Only sets the pathname when its not '' or '/'
-        if (PLATFORM.location.pathname && PLATFORM.location.pathname.length > 1) {
-            this.window.pathName = PLATFORM.location.pathname;
+        if (window.location.pathname && window.location.pathname.length > 1) {
+            this.window.pathName = window.location.pathname;
         }
     }
     /**
@@ -146,7 +152,7 @@ export class Configuration {
      * @returns {boolean}
      */
     is(environment: string) {
-        return environment === this.environment;
+        return (environment === this.environment);
     }
 
     /**
@@ -158,27 +164,23 @@ export class Configuration {
      */
     check() {
         let hostname = this.window.hostName;
-
-        if (this.window.port != '') {
+        if (this.window.port != '')
             hostname += ':' + this.window.port;
-        }
-
-        if (this.base_path_mode) {
+        if (this.base_path_mode)
             hostname += this.window.pathName;
-        }
 
         // Check we have environments we can loop
         if (this.environments) {
             // Loop over supplied environments
             for (let env in this.environments) {
                 // Get environment hostnames
-                let hostnames = this.environments[env];
+                let hostnames = this.environments[ env ];
 
                 // Make sure we have hostnames
                 if (hostnames) {
                     // Loop the hostnames
                     for (let host of hostnames) {
-                        if (hostname.search('(?:^|W)' + host + '(?:$|W)') !== -1) {
+                        if (hostname.search('(?:^|\W)' + host + '(?:$|\W)') !== -1) {
                             this.setEnvironment(env);
 
                             // We have successfully found an environment, stop searching
@@ -198,7 +200,7 @@ export class Configuration {
      * @returns {boolean}
      */
     environmentEnabled() {
-        return !(this.environment === 'default' || this.environment === '' || !this.environment);
+        return (!(this.environment === 'default' || this.environment === '' || !this.environment));
     }
 
     /**
@@ -225,9 +227,9 @@ export class Configuration {
         let splitKey = key.split('.');
         let currentObject = baseObject;
 
-        splitKey.forEach(key => {
-            if (currentObject[key]) {
-                currentObject = currentObject[key];
+        splitKey.forEach((key) => {
+            if (currentObject[ key ]) {
+                currentObject = currentObject[ key ];
             } else {
                 throw 'Key ' + key + ' not found';
             }
@@ -252,16 +254,16 @@ export class Configuration {
         if (key.indexOf('.') === -1) {
             // Using default environment
             if (!this.environmentEnabled()) {
-                return this.obj[key] ? this.obj[key] : defaultValue;
+                return this.obj[ key ] ? this.obj[ key ] : defaultValue;
             }
 
             if (this.environmentEnabled()) {
                 // Value exists in environment
-                if (this.environmentExists() && this.obj[this.environment][key]) {
-                    returnVal = this.obj[this.environment][key];
+                if (this.environmentExists() && this.obj[ this.environment ][ key ]) {
+                    returnVal = this.obj[ this.environment ][ key ];
                     // Get default value from non-namespaced section if enabled
-                } else if (this.cascade_mode && this.obj[key]) {
-                    returnVal = this.obj[key];
+                } else if (this.cascade_mode && this.obj[ key ]) {
+                    returnVal = this.obj[ key ];
                 }
 
                 return returnVal;
@@ -271,20 +273,20 @@ export class Configuration {
             if (this.environmentEnabled()) {
                 if (this.environmentExists()) {
                     try {
-                        return this.getDictValue(this.obj[this.environment], key);
+                        return this.getDictValue(this.obj[ this.environment ], key);
                     } catch {
                         // nested key, env exists, key is not in environment
                         if (this.cascade_mode) {
                             try {
                                 return this.getDictValue(this.obj, key);
-                            } catch {}
+                            } catch { }
                         }
                     }
                 }
             } else {
                 try {
                     return this.getDictValue(this.obj, key);
-                } catch {}
+                } catch { }
             }
         }
 
@@ -300,17 +302,17 @@ export class Configuration {
      */
     set(key: string, val: string) {
         if (key.indexOf('.') === -1) {
-            this.obj[key] = val;
+            this.obj[ key ] = val;
         } else {
             let splitKey = key.split('.');
-            let parent = splitKey[0];
-            let child = splitKey[1];
+            let parent = splitKey[ 0 ];
+            let child = splitKey[ 1 ];
 
-            if (this.obj[parent] === undefined) {
-                this.obj[parent] = {};
+            if (this.obj[ parent ] === undefined) {
+                this.obj[ parent ] = {};
             }
 
-            this.obj[parent][child] = val;
+            this.obj[ parent ][ child ] = val;
         }
     }
 
@@ -342,7 +344,7 @@ export class Configuration {
      *
      */
     lazyMerge(obj: {} | any) {
-        let currentMergeConfig = this._config_merge_object || {};
+        let currentMergeConfig = (this._config_merge_object || {});
 
         this._config_merge_object = deepExtend(currentMergeConfig, obj);
     }
@@ -377,14 +379,20 @@ export class Configuration {
      * @returns {Promise}
      */
     loadConfig() {
-        return this.loadConfigFile(join(this.directory, this.config), (data: string) =>
-            this.setAll(data),
-        ).then(() => {
-            if (this._config_merge_object) {
-                this.merge(this._config_merge_object);
-                this._config_merge_object = null;
-            }
-        });
+        return this.loadConfigFile(join(this.directory, this.config), (data: string) => this.setAll(data))
+            .then(() => {
+                if (this._config_merge_object) {
+                    this.merge(this._config_merge_object);
+                    this._config_merge_object = null;                    
+                }
+                this._loaded = true;
+            })
+            .catch((reason) => {
+                if (this.failOnLoadError) {
+                    throw reason;
+                }
+                this._loadError = typeof reason === 'string' ? reason : reason.message;
+            });
     }
 
     /**
@@ -404,22 +412,34 @@ export class Configuration {
             }
             xhr.open('GET', pathClosure, true);
 
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    let data = JSON.parse(this.responseText);
-                    action(data);
-                    resolve(data);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status >= 200 && xhr.status < 400) {
+                    try {
+                        let data = JSON.parse(this.responseText);
+                        action(data);
+                        resolve(data);
+                    }
+                    catch (exc) {
+                        var errMsg = 'Error loading configuration file: ' + exc;
+                        console.error("[AureliaConfiguration] " + errMsg);
+                        reject(new Error(errMsg));
+                    }
+                    
                 }
             };
 
-            xhr.onloadend = function() {
+            xhr.onloadend = function (this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) {
                 if (xhr.status == 404) {
-                    reject('Configuration file could not be found: ' + path);
+                    var errMsg = 'Configuration file could not be found: ' + path;
+                    console.error("[AureliaConfiguration] " + errMsg);
+                    reject(new Error(errMsg));
                 }
             };
 
-            xhr.onerror = function() {
-                reject(`Configuration file could not be found or loaded: ${pathClosure}`);
+            xhr.onerror = function (this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) {
+                var errMsg = `Configuration file could not be found or loaded: ${pathClosure}`;
+                console.error("[AureliaConfiguration] " + errMsg);
+                reject(new Error(errMsg));
             };
 
             xhr.send(null);
@@ -439,16 +459,18 @@ export class Configuration {
      */
     mergeConfigFile(path: string, optional: boolean) {
         return new Promise((resolve, reject) => {
-            this.loadConfigFile(path, (data: {} | any) => {
-                this.lazyMerge(data);
-                resolve();
-            }).catch(error => {
-                if (optional === true) {
+            this
+                .loadConfigFile(path, (data: {} | any) => {
+                    this.lazyMerge(data);
                     resolve();
-                } else {
-                    reject(error);
-                }
-            });
+                })
+                .catch(error => {
+                    if (optional === true) {
+                        resolve();
+                    } else {
+                        reject(error);
+                    }
+                });
         });
     }
 }

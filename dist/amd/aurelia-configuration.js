@@ -1,6 +1,7 @@
 define(["require", "exports", "aurelia-path", "./deep-extend", "./window-info"], function (require, exports, aurelia_path_1, deep_extend_1, window_info_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    exports.AureliaConfiguration = void 0;
     var AureliaConfiguration = (function () {
         function AureliaConfiguration() {
             this.environment = 'default';
@@ -11,6 +12,9 @@ define(["require", "exports", "aurelia-path", "./deep-extend", "./window-info"],
             this.base_path_mode = false;
             this._config_object = {};
             this._config_merge_object = {};
+            this.failOnLoadError = true;
+            this._loaded = false;
+            this._loadError = '';
             this.window = new window_info_1.WindowInfo();
             this.window.hostName = window.location.hostname;
             this.window.port = window.location.port;
@@ -18,6 +22,16 @@ define(["require", "exports", "aurelia-path", "./deep-extend", "./window-info"],
                 this.window.pathName = window.location.pathname;
             }
         }
+        Object.defineProperty(AureliaConfiguration.prototype, "loaded", {
+            get: function () { return this._loaded; },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(AureliaConfiguration.prototype, "loadError", {
+            get: function () { return this._loadError; },
+            enumerable: false,
+            configurable: true
+        });
         AureliaConfiguration.prototype.setDirectory = function (path) {
             this.directory = path;
         };
@@ -49,14 +63,14 @@ define(["require", "exports", "aurelia-path", "./deep-extend", "./window-info"],
             get: function () {
                 return this._config_object;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Object.defineProperty(AureliaConfiguration.prototype, "config", {
             get: function () {
                 return this.config_file;
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         AureliaConfiguration.prototype.is = function (environment) {
@@ -180,6 +194,13 @@ define(["require", "exports", "aurelia-path", "./deep-extend", "./window-info"],
                     _this.merge(_this._config_merge_object);
                     _this._config_merge_object = null;
                 }
+                _this._loaded = true;
+            })
+                .catch(function (reason) {
+                if (_this.failOnLoadError) {
+                    throw reason;
+                }
+                _this._loadError = typeof reason === 'string' ? reason : reason.message;
             });
         };
         AureliaConfiguration.prototype.loadConfigFile = function (path, action) {
@@ -191,19 +212,30 @@ define(["require", "exports", "aurelia-path", "./deep-extend", "./window-info"],
                 }
                 xhr.open('GET', pathClosure, true);
                 xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 4 && xhr.status == 200) {
-                        var data = JSON.parse(this.responseText);
-                        action(data);
-                        resolve(data);
+                    if (xhr.readyState == 4 && xhr.status >= 200 && xhr.status < 400) {
+                        try {
+                            var data = JSON.parse(this.responseText);
+                            action(data);
+                            resolve(data);
+                        }
+                        catch (exc) {
+                            var errMsg = 'Error loading configuration file: ' + exc;
+                            console.error("[AureliaConfiguration] " + errMsg);
+                            reject(new Error(errMsg));
+                        }
                     }
                 };
-                xhr.onloadend = function () {
+                xhr.onloadend = function (ev) {
                     if (xhr.status == 404) {
-                        reject('Configuration file could not be found: ' + path);
+                        var errMsg = 'Configuration file could not be found: ' + path;
+                        console.error("[AureliaConfiguration] " + errMsg);
+                        reject(new Error(errMsg));
                     }
                 };
-                xhr.onerror = function () {
-                    reject("Configuration file could not be found or loaded: " + pathClosure);
+                xhr.onerror = function (ev) {
+                    var errMsg = "Configuration file could not be found or loaded: " + pathClosure;
+                    console.error("[AureliaConfiguration] " + errMsg);
+                    reject(new Error(errMsg));
                 };
                 xhr.send(null);
             });
