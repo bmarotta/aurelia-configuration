@@ -294,6 +294,27 @@ A method to get all configuration options pulled from the configuration file.
 var myConfigValues = config.getAll();
 ```
 
+### failOnLoadError
+When set, the plugin will completely fail Aurelia loading if the config file cannot be loaded (legacy behavior). Set it to false during the initialization if you want to accept the risk to run your application only with default values.
+
+**Usage:**
+```javascript
+  aurelia.use.plugin('aurelia-configx', (config: AureliaConfigx) => {
+      config.failOnLoadError = false;
+  });
+```
+
+### loadError
+Stores the error message in case there is an error while loading the config fail and if failOnLoadError is set to false
+
+**Usage:**
+```javascript
+  if (config.loadError) {
+      // do something
+      logMyError(config.loadError);
+  }
+```
+
 ## Dependencies
 
 * [aurelia-dependency-injection](https://github.com/aurelia/dependency-injection)
