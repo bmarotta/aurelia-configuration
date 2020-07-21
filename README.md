@@ -1,7 +1,6 @@
 # Aurelia-Configuration
 
-[![Join the chat at https://gitter.im/Vheissu/Aurelia-Configuration][badge-gitter-image]][badge-gitter-ref]
-[![NPM][badge-npm-image]][badge-npm-ref]
+**This is a fork of https://github.com/Vheissu/aurelia-configuration . The only difference is the ability of not failing completely if the config fails loading and a better error logging**
 
 A smart configuration plugin and singleton service layer for your Aurelia applications.
 
