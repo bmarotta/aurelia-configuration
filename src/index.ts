@@ -1,8 +1,8 @@
 import { FrameworkConfiguration } from 'aurelia-framework';
-import { AureliaConfiguration } from './aurelia-configuration';
+import { AureliaConfigx } from './aurelia-configx';
 
-export function configure(aurelia: FrameworkConfiguration, configCallback?: (config: AureliaConfiguration) => Promise<any>) {
-    let instance = aurelia.container.get(AureliaConfiguration) as AureliaConfiguration;
+export function configure(aurelia: FrameworkConfiguration, configCallback?: (config: AureliaConfigx) => Promise<any>) {
+    let instance = aurelia.container.get(AureliaConfigx) as AureliaConfigx;
     let promise: Promise<any> | null = null;
 
     // Do we have a callback function?
@@ -19,4 +19,4 @@ export function configure(aurelia: FrameworkConfiguration, configCallback?: (con
         });
 }
 
-export { AureliaConfiguration };
+export { AureliaConfigx };

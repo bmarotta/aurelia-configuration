@@ -1,6 +1,6 @@
-import { AureliaConfiguration } from './aurelia-configuration';
+import { AureliaConfigx } from './aurelia-configx';
 export function configure(aurelia, configCallback) {
-    var instance = aurelia.container.get(AureliaConfiguration);
+    var instance = aurelia.container.get(AureliaConfigx);
     var promise = null;
     if (configCallback !== undefined && typeof (configCallback) === 'function') {
         promise = Promise.resolve(configCallback(instance));
@@ -13,5 +13,5 @@ export function configure(aurelia, configCallback) {
         return instance.loadConfig();
     });
 }
-export { AureliaConfiguration };
+export { AureliaConfigx };
 //# sourceMappingURL=index.js.map

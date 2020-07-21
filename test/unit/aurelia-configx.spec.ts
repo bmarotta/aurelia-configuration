@@ -1,11 +1,11 @@
-import { AureliaConfiguration } from '../../src/aurelia-configuration';
+import { AureliaConfigx } from '../../src/aurelia-configx';
 import { WindowInfo } from '../../src/window-info';
 
 describe('Configuration class', () => {
     let configInstance: any;
 
     beforeEach(() => {
-        configInstance = new AureliaConfiguration();
+        configInstance = new AureliaConfigx();
         spyOn(configInstance, 'setEnvironment').and.callThrough();
     });
 

@@ -1,5 +1,5 @@
 import { WindowInfo } from './window-info';
-export declare class AureliaConfiguration {
+export declare class AureliaConfigx {
     private environment;
     private environments;
     private directory;

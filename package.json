@@ -1,9 +1,9 @@
 {
-  "_from": "aurelia-configuration@^2.0.1",
-  "_id": "aurelia-configuration@2.0.1",
+  "_from": "aurelia-configx@^2.0.1",
+  "_id": "aurelia-configx@2.0.1",
   "_inBundle": false,
   "_integrity": "sha512-Ezj9xUmu3RSxaGzeuX+ZAKPyi7VZXrxiWL4jEbuQmkcJQewKqBa5r9d/W2YY8zxvJe1Sqn8KLAXhLkNJVIz6Yg==",
-  "_location": "/aurelia-configuration",
+  "_location": "/aurelia-configx",
   "_phantomChildren": {
     "aurelia-logging": "1.5.2",
     "aurelia-metadata": "1.0.6",
@@ -13,9 +13,9 @@
   "_requested": {
     "type": "range",
     "registry": true,
-    "raw": "aurelia-configuration@^2.0.1",
-    "name": "aurelia-configuration",
-    "escapedName": "aurelia-configuration",
+    "raw": "aurelia-configx@^2.0.1",
+    "name": "aurelia-configx",
+    "escapedName": "aurelia-configx",
     "rawSpec": "^2.0.1",
     "saveSpec": null,
     "fetchSpec": "^2.0.1"
@@ -24,15 +24,15 @@
     "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/aurelia-configuration/-/aurelia-configuration-2.0.1.tgz",
+  "_resolved": "https://registry.npmjs.org/aurelia-configx/-/aurelia-configx-2.0.1.tgz",
   "_shasum": "f490a72b8adb67a8d264d4866fc1b63ce0e8ba07",
-  "_spec": "aurelia-configuration@^2.0.0",
+  "_spec": "aurelia-configx@^2.0.1",
   "_where": "C:\\Fontes\\VS\\SliddingPuzzle\\slidding-puzzle",
   "author": {
     "name": "Bruno Marotta"
   },
   "bugs": {
-    "url": "https://github.com/bmarotta/aurelia-configuration/issues"
+    "url": "https://github.com/bmarotta/aurelia-configx/issues"
   },
   "bundleDependencies": false,
   "dependencies": {
@@ -73,7 +73,7 @@
     "tslint": "^6.1.2",
     "typescript": "^3.9.7"
   },
-  "homepage": "https://github.com/bmarotta/aurelia-configuration",
+  "homepage": "https://github.com/bmarotta/aurelia-configx",
   "jspm": {
     "registry": "npm",
     "jspmPackage": true,
@@ -117,10 +117,10 @@
   ],
   "license": "MIT",
   "main": "dist/commonjs/index.js",
-  "name": "aurelia-configuration",
+  "name": "aurelia-configx",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/bmarotta/aurelia-configuration.git"
+    "url": "git+ssh://git@github.com/bmarotta/aurelia-configx.git"
   },
   "scripts": {
     "build": "concurrently \"npm run build:amd\" \"npm run build:commonjs\" \"npm run build:es2015\" \"npm run build:native-modules\" \"npm run build:system\"",
@@ -150,5 +150,5 @@
     "test-watch": "concurrently \"./node_modules/.bin/tsc --watch\" \"./node_modules/.bin/karma start\""
   },
   "typings": "dist/commonjs/index.d.ts",
-  "version": "2.0.0"
+  "version": "2.0.1"
 }

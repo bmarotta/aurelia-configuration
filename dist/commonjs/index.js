@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AureliaConfiguration = exports.configure = void 0;
-var aurelia_configuration_1 = require("./aurelia-configuration");
-Object.defineProperty(exports, "AureliaConfiguration", { enumerable: true, get: function () { return aurelia_configuration_1.AureliaConfiguration; } });
+exports.AureliaConfigx = exports.configure = void 0;
+var aurelia_configx_1 = require("./aurelia-configx");
+Object.defineProperty(exports, "AureliaConfigx", { enumerable: true, get: function () { return aurelia_configx_1.AureliaConfigx; } });
 function configure(aurelia, configCallback) {
-    var instance = aurelia.container.get(aurelia_configuration_1.AureliaConfiguration);
+    var instance = aurelia.container.get(aurelia_configx_1.AureliaConfigx);
     var promise = null;
     if (configCallback !== undefined && typeof (configCallback) === 'function') {
         promise = Promise.resolve(configCallback(instance));

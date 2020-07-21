@@ -1,4 +1,4 @@
-# Aurelia-Configuration
+# Aurelia-Configx
 
 **This is a fork of https://github.com/Vheissu/aurelia-configuration . The only difference is the ability of not failing completely if the config fails loading and a better error logging**
 
@@ -6,29 +6,29 @@ A smart configuration plugin and singleton service layer for your Aurelia applic
 
 ## Get Started
 
-* Install aurelia-configuration
+* Install aurelia-configx
 
 **Jspm users**
 
 ```bash
-jspm install aurelia-configuration
+jspm install aurelia-configx
 ```
 
 **Webpack/CLI**
 
 ```bash
-npm install aurelia-configuration --save
+npm install aurelia-configx --save
 ```
 
 ### Using Aurelia CLI?
 You will need to add in some directives to your `aurelia.json` file located in the `aurelia_project` folder.
 
-You need to add "aurelia-configuration" at the end of the `dependencies` section add the following so RequireJS is able to map the dependencies appropriately.
+You need to add "aurelia-configx" at the end of the `dependencies` section add the following so RequireJS is able to map the dependencies appropriately.
 
 ```
 {
-    "name": "aurelia-configuration",
-    "path": "../node_modules/aurelia-configuration/dist/amd",
+    "name": "aurelia-configx",
+    "path": "../node_modules/aurelia-configx/dist/amd",
     "main": "index"
 }
 ```
@@ -40,7 +40,7 @@ export function configure(aurelia) {
     aurelia.use
         .standardConfiguration()
         .developmentLogging()
-        .plugin('aurelia-configuration');
+        .plugin('aurelia-configx');
 
     aurelia.start().then(a => a.setRoot());
 }
@@ -49,7 +49,7 @@ export function configure(aurelia) {
 * Use the plugin to **set** configuration in your app's main.js or main.ts file:
 
 ```javascript
-import {AureliaConfiguration} from "aurelia-configuration";
+import {AureliaConfiguration} from "aurelia-configx";
 // [...]
 aurelia.use
         .standardConfiguration()
@@ -75,7 +75,7 @@ aurelia.use
 
 ```javascript
 import {inject} from 'aurelia-framework';
-import {AureliaConfiguration} from 'aurelia-configuration';
+import {AureliaConfiguration} from 'aurelia-configx';
 
 @inject(AureliaConfiguration)
 export class ViewModel {
@@ -110,7 +110,7 @@ export function configure(aurelia) {
     aurelia.use
         .standardConfiguration()
         .developmentLogging()
-        .plugin('aurelia-configuration', config => {
+        .plugin('aurelia-configx', config => {
             config.setEnvironment('development'); // Environment changes to development
         });
 
@@ -150,7 +150,7 @@ export function configure(aurelia) {
     aurelia.use
         .standardConfiguration()
         .developmentLogging()
-        .plugin('aurelia-configuration', config => {
+        .plugin('aurelia-configx', config => {
             config.setEnvironments({
                 development: ['localhost', 'dev.local'],
                 staging: ['staging.website.com', 'test.staging.website.com'],
@@ -170,7 +170,7 @@ export function configure(aurelia) {
     aurelia.use
         .standardConfiguration()
         .developmentLogging()
-        .plugin('aurelia-configuration', config => {
+        .plugin('aurelia-configx', config => {
             config.setDirectory('config-files'); // Will make plugin look for config files in a directory called "config-files"
             config.setConfig('mycoolconfig.json'); // Will look for mycoolconfig.json as the configuration file
         });
@@ -187,7 +187,7 @@ export function configure(aurelia) {
     aurelia.use
         .standardConfiguration()
         .developmentLogging()
-        .plugin('aurelia-configuration', config => {
+        .plugin('aurelia-configx', config => {
             config.setCascadeMode(false); // Disable value cascading
         });
 
@@ -300,9 +300,4 @@ var myConfigValues = config.getAll();
 * [aurelia-path](https://github.com/aurelia/path)
 * [aurelia-loader](https://github.com/aurelia/loader)
 
-
-[badge-npm-image]: https://img.shields.io/npm/v/aurelia-configuration.svg?style=flat-square
-[badge-npm-ref]: https://www.npmjs.com/package/aurelia-configuration
-[badge-gitter-image]: https://badges.gitter.im/Vheissu/Aurelia-Configuration.svg
-[badge-gitter-ref]: https://gitter.im/Vheissu/Aurelia-Configuration?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 

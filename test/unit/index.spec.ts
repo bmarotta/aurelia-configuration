@@ -1,5 +1,5 @@
 import { configure } from '../../src/index';
-import { AureliaConfiguration } from '../../src/aurelia-configuration';
+import { AureliaConfigx } from '../../src/aurelia-configx';
 
 let AureliaStub = {
     container: {
@@ -17,14 +17,14 @@ describe('Index', () => {
 
     beforeEach(() => {
         // spyOn(window, 'callback').and.callThrough();
-        spyOn(AureliaStub.container, 'get').and.returnValue(new AureliaConfiguration() as any);
+        spyOn(AureliaStub.container, 'get').and.returnValue(new AureliaConfigx() as any);
     });
 
     it('expect callback to be called', () => {
         configure(AureliaStub as any, (<any>window).callback);
 
-        // expect((<any>window).callback).toHaveBeenCalledWith(new AureliaConfiguration);
-        expect((<any>window).callback(new AureliaConfiguration)).toEqual(new AureliaConfiguration);
+        // expect((<any>window).callback).toHaveBeenCalledWith(new AureliaConfigx);
+        expect((<any>window).callback(new AureliaConfigx)).toEqual(new AureliaConfigx);
     });
 
 });
