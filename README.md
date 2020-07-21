@@ -1,6 +1,6 @@
 # Aurelia-Configx
 
-**This is a fork of https://github.com/Vheissu/aurelia-configuration . The only difference is the ability of not failing completely if the config fails loading and a better error logging**
+**This is a fork of https://github.com/Vheissu/aurelia-configuration . The only difference is the option to not fail completely if the config load fails (and a better error logging)**
 
 A smart configuration plugin and singleton service layer for your Aurelia applications.
 

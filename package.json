@@ -121,5 +121,5 @@
     "test-watch": "concurrently \"./node_modules/.bin/tsc --watch\" \"./node_modules/.bin/karma start\""
   },
   "typings": "dist/commonjs/index.d.ts",
-  "version": "2.0.1"
+  "version": "2.0.2"
 }
