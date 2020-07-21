@@ -1,33 +1,4 @@
 {
-  "_from": "aurelia-configx@^2.0.1",
-  "_id": "aurelia-configx@2.0.1",
-  "_inBundle": false,
-  "_integrity": "sha512-Ezj9xUmu3RSxaGzeuX+ZAKPyi7VZXrxiWL4jEbuQmkcJQewKqBa5r9d/W2YY8zxvJe1Sqn8KLAXhLkNJVIz6Yg==",
-  "_location": "/aurelia-configx",
-  "_phantomChildren": {
-    "aurelia-logging": "1.5.2",
-    "aurelia-metadata": "1.0.6",
-    "aurelia-pal": "1.8.2",
-    "aurelia-task-queue": "1.3.3"
-  },
-  "_requested": {
-    "type": "range",
-    "registry": true,
-    "raw": "aurelia-configx@^2.0.1",
-    "name": "aurelia-configx",
-    "escapedName": "aurelia-configx",
-    "rawSpec": "^2.0.1",
-    "saveSpec": null,
-    "fetchSpec": "^2.0.1"
-  },
-  "_requiredBy": [
-    "#USER",
-    "/"
-  ],
-  "_resolved": "https://registry.npmjs.org/aurelia-configx/-/aurelia-configx-2.0.1.tgz",
-  "_shasum": "f490a72b8adb67a8d264d4866fc1b63ce0e8ba07",
-  "_spec": "aurelia-configx@^2.0.1",
-  "_where": "C:\\Fontes\\VS\\SliddingPuzzle\\slidding-puzzle",
   "author": {
     "name": "Bruno Marotta"
   },
